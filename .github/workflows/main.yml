@@ -1,4 +1,3 @@
-
 name: Construir Ultra Max IPTV
 
 on:
@@ -20,12 +19,11 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Configurar Android
-        uses: android-actions/setup-android@v3
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v2
 
-      - name: Comprobar proyecto
-        run: |
-          if [ ! -f gradlew ]; then
-            echo "Falta el proyecto Android o el archivo gradlew"
-            exit 1
-          fi
+      - name: Dar permisos a Gradle
+        run: chmod +x gradlew
+
+      - name: Compilar APK
+        run: ./gradlew assembleDebug
