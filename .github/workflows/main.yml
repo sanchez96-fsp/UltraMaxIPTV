@@ -3,13 +3,14 @@ name: Construir Ultra Max IPTV
 on:
 workflow_dispatch:
 push:
-branches: [main]
+branches:
+- main
 
 jobs:
 build:
 runs-on: ubuntu-latest
 steps:
-- name: Descargar el código
+- name: Descargar codigo
 uses: actions/checkout@v4
 
   - name: Configurar Java
@@ -21,18 +22,15 @@ uses: actions/checkout@v4
   - name: Configurar Android
     uses: android-actions/setup-android@v3
 
-  - name: Dar permisos a Gradle
+  - name: Comprobar proyecto
     run: |
-      if [ -f gradlew ]; then chmod +x gradlew; fi
-
-  - name: Compilar APK
-    run: |
-      if [ -f gradlew ]; then
-        ./gradlew assembleDebug
-      else
-        echo "Falta el proyecto Android y el archivo gradlew"
+      if [ ! -f gradlew ]; then
+        echo "Falta el proyecto Android o el archivo gradlew"
         exit 1
       fi
+
+  - name: Compilar APK
+    run: ./gradlew assembleDebug
 
   - name: Guardar APK
     uses: actions/upload-artifact@v4
