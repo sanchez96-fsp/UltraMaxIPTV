@@ -19,9 +19,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Configurar Android SDK
-        uses: android-actions/setup-android@v2
-
       - name: Dar permisos a Gradle
         run: chmod +x gradlew
 
